@@ -18,6 +18,19 @@ var cache = map[string][]string{}
 
 var mutex sync.RWMutex
 
+type PrintOpts struct {
+	// Pass a single number to specify a total number of source lines.
+	//
+	// Pass two numbers to specify exactly how many lines should be shown
+	// before and after traced line.
+	nums []int
+
+	colorized bool
+
+	// 0 -> prints all frames
+	closestNFrames int
+}
+
 // Print prints error message with stack trace.
 func Print(err error) {
 	fmt.Println(Sprint(err))
@@ -36,6 +49,10 @@ func PrintSource(err error, nums ...int) {
 	fmt.Println(SprintSource(err, nums...))
 }
 
+func PrintSourceWithOpts(err error, opts *PrintOpts) {
+	fmt.Println(SprintSourceWithOpts(err, opts))
+}
+
 // PrintSourceColor prints error message with stack trace and source fragments,
 // which are in color.
 // Output rules are the same as in PrintSource.
@@ -45,17 +62,21 @@ func PrintSourceColor(err error, nums ...int) {
 
 // Sprint returns error output by the same rules as Print.
 func Sprint(err error) string {
-	return sprint(err, []int{0}, false)
+	return sprint(err, &PrintOpts{nums: []int{0}, colorized: false})
 }
 
 // SprintSource returns error output by the same rules as PrintSource.
 func SprintSource(err error, nums ...int) string {
-	return sprint(err, nums, false)
+	return sprint(err, &PrintOpts{nums: nums, colorized: false})
+}
+
+func SprintSourceWithOpts(err error, opts *PrintOpts) string {
+	return sprint(err, opts)
 }
 
 // SprintSourceColor returns error output by the same rules as PrintSourceColor.
 func SprintSourceColor(err error, nums ...int) string {
-	return sprint(err, nums, true)
+	return sprint(err, &PrintOpts{nums: nums, colorized: true})
 }
 
 func calcRows(nums []int) (before, after int, withSource bool) {
@@ -154,7 +175,7 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 	return append(rows, "")
 }
 
-func sprint(err error, nums []int, colorized bool) string {
+func sprint(err error, opts *PrintOpts) string {
 	if err == nil {
 		return ""
 	}
@@ -162,8 +183,11 @@ func sprint(err error, nums []int, colorized bool) string {
 	if !ok {
 		return err.Error()
 	}
-	before, after, withSource := calcRows(nums)
+	before, after, withSource := calcRows(opts.nums)
 	frames := e.StackTrace()
+	if opts.closestNFrames > 0 && len(frames) > opts.closestNFrames {
+		frames = frames[:opts.closestNFrames]
+	}
 	expectedRows := len(frames) + 1
 	if withSource {
 		expectedRows = (before+after+3)*len(frames) + 2
@@ -175,12 +199,12 @@ func sprint(err error, nums []int, colorized bool) string {
 	}
 	for _, frame := range frames {
 		message := frame.String()
-		if colorized {
+		if opts.colorized {
 			message = bold(message)
 		}
 		rows = append(rows, message)
 		if withSource {
-			rows = sourceRows(rows, frame, before, after, colorized)
+			rows = sourceRows(rows, frame, before, after, opts.colorized)
 		}
 	}
 	return strings.Join(rows, "\n")
