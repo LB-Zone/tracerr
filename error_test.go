@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ztrue/tracerr"
+	"github.com/LB-Zone/tracerr"
 )
 
 type ErrorTestCase struct {
@@ -32,7 +32,7 @@ func TestError(t *testing.T) {
 			ExpectedMessage: "error message text",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
-					Func: "github.com/ztrue/tracerr_test.TestError",
+					Func: "github.com/LB-Zone/tracerr_test.TestError",
 					Line: 31,
 					Path: "/tracerr/error_test.go",
 				},
@@ -43,7 +43,7 @@ func TestError(t *testing.T) {
 			ExpectedMessage: "invalid argument 5: \"foo\"",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
-					Func: "github.com/ztrue/tracerr_test.TestError",
+					Func: "github.com/LB-Zone/tracerr_test.TestError",
 					Line: 42,
 					Path: "/tracerr/error_test.go",
 				},
@@ -54,7 +54,7 @@ func TestError(t *testing.T) {
 			ExpectedMessage: "wrapped error",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
-					Func: "github.com/ztrue/tracerr_test.TestError",
+					Func: "github.com/LB-Zone/tracerr_test.TestError",
 					Line: 53,
 					Path: "/tracerr/error_test.go",
 				},
@@ -65,22 +65,22 @@ func TestError(t *testing.T) {
 			ExpectedMessage: "error with stack trace",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameC",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameC",
 					Line: 17,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameB",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameB",
 					Line: 13,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameA",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameA",
 					Line: 9,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.TestError",
+					Func: "github.com/LB-Zone/tracerr_test.TestError",
 					Line: 64,
 					Path: "/tracerr/error_test.go",
 				},
@@ -91,22 +91,22 @@ func TestError(t *testing.T) {
 			ExpectedMessage: "error wrapped twice",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameC",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameC",
 					Line: 17,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameB",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameB",
 					Line: 13,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.addFrameA",
+					Func: "github.com/LB-Zone/tracerr_test.addFrameA",
 					Line: 9,
 					Path: "/tracerr/error_helper_test.go",
 				},
 				{
-					Func: "github.com/ztrue/tracerr_test.TestError",
+					Func: "github.com/LB-Zone/tracerr_test.TestError",
 					Line: 90,
 					Path: "/tracerr/error_test.go",
 				},

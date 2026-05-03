@@ -1,8 +1,8 @@
 # Golang Errors with Stack Trace and Source Fragments
 
-[![GoDoc](https://godoc.org/github.com/ztrue/tracerr?status.svg)](https://godoc.org/github.com/ztrue/tracerr)
-[![Report](https://goreportcard.com/badge/github.com/ztrue/tracerr)](https://goreportcard.com/report/github.com/ztrue/tracerr)
-[![Coverage Status](https://coveralls.io/repos/github/ztrue/tracerr/badge.svg?branch=master)](https://coveralls.io/github/ztrue/tracerr?branch=master)
+[![GoDoc](https://godoc.org/github.com/LB-Zone/tracerr?status.svg)](https://godoc.org/github.com/LB-Zone/tracerr)
+[![Report](https://goreportcard.com/badge/github.com/LB-Zone/tracerr)](https://goreportcard.com/report/github.com/LB-Zone/tracerr)
+[![Coverage Status](https://coveralls.io/repos/github/LB-Zone/tracerr/badge.svg?branch=master)](https://coveralls.io/github/LB-Zone/tracerr?branch=master)
 
 Tired of uninformative error output? Probably this will be more convenient:
 
@@ -16,7 +16,7 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/ztrue/tracerr"
+	"github.com/LB-Zone/tracerr"
 )
 
 func main() {
@@ -43,7 +43,7 @@ Find more executable examples in [examples](examples) dir.
 ### Import
 
 ```go
-import "github.com/ztrue/tracerr"
+import "github.com/LB-Zone/tracerr"
 ```
 
 ### Create New Error
@@ -164,12 +164,12 @@ Benchmarks for creating a new error with a stack trace of different depth:
 GOMAXPROCS=1 go test -bench=. -benchmem
 goos: linux
 goarch: amd64
-pkg: github.com/ztrue/tracerr
+pkg: github.com/LB-Zone/tracerr
 cpu: Intel(R) Core(TM) i7-14700KF
 BenchmarkNew/5           4500129               267.1 ns/op           256 B/op          4 allocs/op
 BenchmarkNew/10          3325456               359.5 ns/op           256 B/op          4 allocs/op
 BenchmarkNew/20          1000000              1001 ns/op             576 B/op          5 allocs/op
 BenchmarkNew/40           538689              2171 ns/op            1216 B/op          6 allocs/op
 PASS
-ok      github.com/ztrue/tracerr        5.246s
+ok      github.com/LB-Zone/tracerr        5.246s
 ```
