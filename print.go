@@ -23,12 +23,12 @@ type PrintOpts struct {
 	//
 	// Pass two numbers to specify exactly how many lines should be shown
 	// before and after traced line.
-	nums []int
+	Nums []int
 
-	colorized bool
+	Colorized bool
 
 	// 0 -> prints all frames
-	closestNFrames int
+	ClosestNFrames int
 }
 
 // Print prints error message with stack trace.
@@ -62,12 +62,12 @@ func PrintSourceColor(err error, nums ...int) {
 
 // Sprint returns error output by the same rules as Print.
 func Sprint(err error) string {
-	return sprint(err, &PrintOpts{nums: []int{0}, colorized: false})
+	return sprint(err, &PrintOpts{Nums: []int{0}, Colorized: false})
 }
 
 // SprintSource returns error output by the same rules as PrintSource.
 func SprintSource(err error, nums ...int) string {
-	return sprint(err, &PrintOpts{nums: nums, colorized: false})
+	return sprint(err, &PrintOpts{Nums: nums, Colorized: false})
 }
 
 func SprintSourceWithOpts(err error, opts *PrintOpts) string {
@@ -76,7 +76,7 @@ func SprintSourceWithOpts(err error, opts *PrintOpts) string {
 
 // SprintSourceColor returns error output by the same rules as PrintSourceColor.
 func SprintSourceColor(err error, nums ...int) string {
-	return sprint(err, &PrintOpts{nums: nums, colorized: true})
+	return sprint(err, &PrintOpts{Nums: nums, Colorized: true})
 }
 
 func calcRows(nums []int) (before, after int, withSource bool) {
@@ -183,10 +183,10 @@ func sprint(err error, opts *PrintOpts) string {
 	if !ok {
 		return err.Error()
 	}
-	before, after, withSource := calcRows(opts.nums)
+	before, after, withSource := calcRows(opts.Nums)
 	frames := e.StackTrace()
-	if opts.closestNFrames > 0 && len(frames) > opts.closestNFrames {
-		frames = frames[:opts.closestNFrames]
+	if opts.ClosestNFrames > 0 && len(frames) > opts.ClosestNFrames {
+		frames = frames[:opts.ClosestNFrames]
 	}
 	expectedRows := len(frames) + 1
 	if withSource {
@@ -199,12 +199,12 @@ func sprint(err error, opts *PrintOpts) string {
 	}
 	for _, frame := range frames {
 		message := frame.String()
-		if opts.colorized {
+		if opts.Colorized {
 			message = bold(message)
 		}
 		rows = append(rows, message)
 		if withSource {
-			rows = sourceRows(rows, frame, before, after, opts.colorized)
+			rows = sourceRows(rows, frame, before, after, opts.Colorized)
 		}
 	}
 	return strings.Join(rows, "\n")
