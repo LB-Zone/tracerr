@@ -161,7 +161,7 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 		var message string
 		lineNum := fmt.Sprintf("%*d", width, i+1)
 		if i == frame.Line-1 {
-			message = fmt.Sprintf("%s\t%s", lineNum, line)
+			message = fmt.Sprintf("%s\t%s\t\t<----", lineNum, line)
 			if colorized {
 				message = red(message)
 			}
